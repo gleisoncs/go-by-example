@@ -2,22 +2,15 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
-func worker(done chan bool) {
-	fmt.Print("working...")
-	time.Sleep(time.Second)
-	fmt.Println("done")
-
-	done <- true
+func task1(str chan string) {
+	fmt.Println(str)
 }
 
 func main() {
-
-	done := make(chan bool)
-	go worker(done)
-	fmt.Println("not yet")
-
-	<-done
+	done := make(chan string)
+	go task1(done)
+	done <- "world"
+	fmt.Println(done)
 }
