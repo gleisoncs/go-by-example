@@ -2,15 +2,18 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
-func task1(str chan string) {
-	fmt.Println(str)
-}
-
 func main() {
-	done := make(chan string)
-	go task1(done)
-	done <- "world"
-	fmt.Println(done)
+
+	messages := make(chan string)
+
+	go func() { messages <- ("ping - ") }()
+
+	fmt.Println("waiting 5 seconds")
+	time.Sleep(5 * time.Second)
+
+	msg := <-messages
+	fmt.Println(msg)
 }
